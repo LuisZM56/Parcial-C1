@@ -1,0 +1,22 @@
+Situación Problemática
+
+En muchos pequeños negocios y emprendimientos, especialmente en el sector comercial y educativo, no existe una herramienta sencilla para calcular presupuestos rápidos de productos o servicios.
+
+Los encargados deben hacer cálculos manuales, lo que provoca errores en precios finales, impuestos y descuentos, generando pérdida de tiempo, errores en cobros, mala experiencia del cliente, etc.
+
+Solución propuesta
+
+Desarrollar una aplicación web de calculadora de presupuestos que permita lo siguiente:
+
+-Ingresar nombre del producto
+-Precio unitario
+-Cantidad
+-Tipo de descuento
+
+Esto con el fin de calcular total automáticamente precios.
+
+|Sectores a los que va enfocado
+
+-Pequeños negocios
+-Tiendas locales
+-Emprendedores

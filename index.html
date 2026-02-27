@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Calculadora de Presupuesto</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container{
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 350px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+h2{
+    text-align: center;
+}
+input, select, button{
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0;
+}
+button{
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover{
+    background-color: #0056b3;
+}
+.resultado{
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+}
+.error{
+    color: red;
+    font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Calculadora de Presupuesto</h2>
+
+    <form id="formPresupuesto">
+        <input type="text" id="producto" placeholder="Nombre del producto" required>
+        <input type="number" id="precio" placeholder="Precio unitario" required>
+        <input type="number" id="cantidad" placeholder="Cantidad" required>
+
+        <select id="descuento">
+            <option value="0">Sin descuento</option>
+            <option value="10">10%</option>
+            <option value="20">20%</option>
+        </select>
+
+        <button type="submit">Calcular</button>
+    </form>
+
+    <resultado-box></resultado-box>
+
+    <div id="mensajeError" class="error"></div>
+</div>
+
+<script>
+class ResultadoBox extends HTMLElement{
+    constructor(){
+        super();
+        this.attachShadow({mode: 'open'});
+        this.shadowRoot.innerHTML = `
+            <div class="resultado">
+                <p id="contenido">El resultado aparecerá aquí</p>
+            </div>
+        `;
+    }
+
+    mostrarResultado(texto){
+        this.shadowRoot.getElementById("contenido").textContent = texto;
+    }
+}
+
+customElements.define("resultado-box", ResultadoBox);
+
+const form = document.getElementById("formPresupuesto");
+const errorDiv = document.getElementById("mensajeError");
+const resultado = document.querySelector("resultado-box");
+
+form.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const producto = document.getElementById("producto").value.trim();
+    const precio = parseFloat(document.getElementById("precio").value);
+    const cantidad = parseInt(document.getElementById("cantidad").value);
+    const descuento = parseInt(document.getElementById("descuento").value);
+
+    if(producto === "" || isNaN(precio) || isNaN(cantidad)){
+        errorDiv.textContent = "Debe completar todos los campos correctamente.";
+        return;
+    }
+
+    if(precio <= 0 || cantidad <= 0){
+        errorDiv.textContent = "Precio y cantidad deben ser mayores que 0.";
+        return;
+    }
+
+    errorDiv.textContent = "";
+
+    let subtotal = precio * cantidad;
+    let descuentoAplicado = subtotal * (descuento / 100);
+    let total = subtotal - descuentoAplicado;
+
+    resultado.mostrarResultado(
+        "Producto: " + producto +
+        " | Total a pagar: $" + total.toFixed(2)
+    );
+});
+</script>
+
+</body>
+</html>
