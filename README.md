@@ -1,4 +1,7 @@
 # Parcial-C1
+# Integrantes: 
+# Luis Angel Zuniga Menjivar
+# Victor Arnoldo Iglesias Sandoval
 
 1. ¿Qué valor agregado tiene el uso de WebComponents?
 
